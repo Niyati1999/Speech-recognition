@@ -1,0 +1,17 @@
+import speech_recognition as sr
+r = sr.Recognizer()
+
+
+with sr.AudioFile('au.wav') as source:
+    audio = r.listen(source)
+try:
+    from translate import Translator
+
+    translator = Translator(to_lang='hi-IN')
+    translation = translator.translate(r.recognize_google(audio))
+    print("You said: " + translation)
+
+except sr.UnknownValueError:
+    print("Google Speech Recognition could not understand audio")
+except sr.RequestError as e:
+    print("Could not request results from Google Speech Recognition service; {0}".format(e)) 
